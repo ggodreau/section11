@@ -15,7 +15,12 @@ import {Users} from '/app/users.component';
 
 @Component({
     selector: 'my-app',
-    template: '<my-navbar></my-navbar><router-outlet></router-outlet>',
+    template: `
+        <my-navbar></my-navbar>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+        `,
     directives: [MyNavbar, ROUTER_DIRECTIVES]
 })
 export class AppComponent { }
