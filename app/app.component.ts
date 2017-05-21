@@ -5,7 +5,7 @@ import {HomeComponent} from '/app/home.component';
 import {MyNavbar} from '/app/navbar.component';
 import {Posts} from '/app/posts.component';
 import {Users} from '/app/users.component';
-import {NewUser} from  '/app/newuser.component';
+import {NewUser} from '/app/newuser.component';
 
 @RouteConfig([
     { path: '/', name: 'Home', component: HomeComponent, useAsDefault: true },
