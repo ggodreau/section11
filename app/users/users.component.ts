@@ -7,7 +7,9 @@ import {UsersService} from '/app/users/users.service';
     template: `
         <h1>UsersComponent</h1>
         <p>
-            <a [routerLink]="['NewUser']" class="btn btn-primary">Add User</a>
+            <!--<a [routerLink]="['NewUser', { id: "new" }]" class="btn btn-primary">Add User</a>-->
+            <!--<a [routerLink]="['NewUser']" class="btn btn-primary">Add User</a>-->
+            <a [routerLink]="['UserForm', { id: 'new' }]" class="btn btn-primary">Add User</a>
         </p>
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -35,6 +37,7 @@ import {UsersService} from '/app/users/users.service';
 export class Users implements OnInit { 
     isLoading = true;
     users;
+    newId = "new";
 
     constructor(private _usersService: UsersService){}
 
