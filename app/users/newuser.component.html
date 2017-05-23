@@ -13,10 +13,8 @@
                             <input 
                                 ngControl="name"
                                 #name="ngForm"
-                                (click)="log(name)"
                                 class="form-control"
                                 type="text">
-                            <!--                            <div>{{ name.errors | json }}</div>-->
                             <div 
                                 *ngIf="name.touched && !name.valid"
                                 class="alert alert-danger">
@@ -28,10 +26,8 @@
                             <input 
                                 ngControl="email"
                                 #email="ngForm"
-                                (click)="log(email)"
                                 class="form-control"
                                 type="text">
-                            <!--<div>{{ email.errors | json }}</div>-->
                             <div *ngIf="email.touched && email.errors != null">
                                 <div 
                                     *ngIf="email.errors?.isBlank"
@@ -42,11 +38,6 @@
                                     class="alert alert-danger">Please enter a valid email address.
                                 </div>
                             </div>
-                            <!--<div
-                                *ngIf="email.touched && !email.valid"
-                                class="alert alert-danger">
-                                Email is required.
-                            </div>-->
                         </div>
                         <div class="form-group">
                             <label>Phone</label>
