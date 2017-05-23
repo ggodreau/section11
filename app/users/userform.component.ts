@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Input} from 'angular2/core';
 import {ROUTER_DIRECTIVES, CanDeactivate, Router, RouteParams} from 'angular2/router';
 import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {CustomValidators} from '/app/shared/customvalidators';
@@ -13,7 +13,7 @@ import {UsersService} from '/app/users/users.service';
 export class UserForm implements CanDeactivate, OnInit { 
     signupForm: ControlGroup;
     submitted = false;
-    routeParams = [];
+    @Input() routeParams = [];
 
     constructor(
         fb: FormBuilder, 
@@ -59,7 +59,7 @@ export class UserForm implements CanDeactivate, OnInit {
 
     ngOnInit(){
         console.log(this._routeParams.params.id);
-        this.routeParams = this._routeParams.params.id;
+        this.routeParams = this._routeParams.params;
     }
 
 }

@@ -3,7 +3,8 @@
         <div class="col-md-3 col-lg-3">
         </div>
         <div class="col-md-6 col-lg-6"> 
-            <h1>Add a User {{ routeParams }}</h1>
+            <h1 *ngIf="[routeParams.id] == 'new'">Add New User</h1>
+            <h1 *ngIf="[routeParams.id] != 'new'">Edit {{ routeParams.name }}</h1>
             <div class="well well-lg">
                 <form [ngFormModel]="signupForm">
                     <fieldset>

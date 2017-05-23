@@ -7,8 +7,6 @@ import {UsersService} from '/app/users/users.service';
     template: `
         <h1>UsersComponent</h1>
         <p>
-            <!--<a [routerLink]="['NewUser', { id: "new" }]" class="btn btn-primary">Add User</a>-->
-            <!--<a [routerLink]="['NewUser']" class="btn btn-primary">Add User</a>-->
             <a [routerLink]="['UserForm', { id: 'new' }]" class="btn btn-primary">Add User</a>
         </p>
         <table class="table table-bordered table-striped table-hover">
@@ -24,7 +22,13 @@ import {UsersService} from '/app/users/users.service';
                 <tr *ngFor="#user of users">
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
-                    <td><i class="glyphicon glyphicon-edit"></i></td>
+                    <td>
+                        <a [routerLink]="['UserForm', { id: user.id, name: user.name }]">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                    </td>
+                    <!-- also works, but doesn't show hand with hover -->
+                    <!-- <td><i class="glyphicon glyphicon-edit" [routerLink]="['UserForm', { id: 'new' }]"></i></td> -->
                     <td><i class="glyphicon glyphicon-remove"></i></td>
                 </tr>
             </tbody>
