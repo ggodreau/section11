@@ -5,6 +5,7 @@
         <div class="col-md-6 col-lg-6"> 
             <h1 *ngIf="[routeParams.id] == 'new'">Add New User</h1>
             <h1 *ngIf="[routeParams.id] != 'new'">Edit {{ routeParams.name }}</h1>
+            <div>{{ userInfo.address.street }}</div>
             <div class="well well-lg">
                 <form [ngFormModel]="signupForm">
                     <fieldset>
@@ -15,7 +16,8 @@
                                 ngControl="name"
                                 #name="ngForm"
                                 class="form-control"
-                                type="text">
+                                type="text"
+                                [(ngModel)]="userInfo.name">
                             <div 
                                 *ngIf="name.touched && !name.valid"
                                 class="alert alert-danger">
@@ -28,7 +30,8 @@
                                 ngControl="email"
                                 #email="ngForm"
                                 class="form-control"
-                                type="text">
+                                type="text"
+                                [(ngModel)]="userInfo.email">
                             <div *ngIf="email.touched && email.errors != null">
                                 <div 
                                     *ngIf="email.errors?.isBlank"

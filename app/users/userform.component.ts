@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES, CanDeactivate, Router, RouteParams} from 'angular2/router';
 import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {CustomValidators} from '/app/shared/customvalidators';
@@ -13,7 +13,8 @@ import {UsersService} from '/app/users/users.service';
 export class UserForm implements CanDeactivate, OnInit { 
     signupForm: ControlGroup;
     submitted = false;
-    @Input() routeParams = [];
+    routeParams = [];
+    userInfo = [];
 
     constructor(
         fb: FormBuilder, 
@@ -58,8 +59,33 @@ export class UserForm implements CanDeactivate, OnInit {
     }
 
     ngOnInit(){
-        console.log(this._routeParams.params.id);
         this.routeParams = this._routeParams.params;
+        this.userInfo = 
+            {
+              "id": 0,
+              "name": "",
+              "username": "",
+              "email": "",
+              "address": {
+                "street": "",
+                "suite": "",
+                "city": "",
+                "zipcode": "",
+                "geo": {
+                  "lat": "",
+                  "lng": ""
+                }
+              },
+              "phone": "",
+              "website": "",
+              "company": {
+                "name": "",
+                "catchPhrase": "",
+                "bs": ""
+              }
+            };
+        // pull in id from API and populate form fields on init
+        this._usersService.getUser(this.routeParams.id).subscribe(x => this.userInfo = x);
     }
 
 }
