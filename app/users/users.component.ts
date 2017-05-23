@@ -1,7 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
-import {UsersService} from '/app/users.service';
+import {UsersService} from '/app/users/users.service';
 
 @Component({
     template: `

@@ -3,9 +3,9 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {HomeComponent} from '/app/home.component';
 import {MyNavbar} from '/app/navbar.component';
-import {Posts} from '/app/posts.component';
-import {Users} from '/app/users.component';
-import {NewUser} from '/app/newuser.component';
+import {Posts} from '/app/posts/posts.component';
+import {Users} from '/app/users/users.component';
+import {NewUser} from '/app/users/newuser.component';
 
 @RouteConfig([
     { path: '/', name: 'Home', component: HomeComponent, useAsDefault: true },
