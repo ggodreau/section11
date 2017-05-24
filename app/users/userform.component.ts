@@ -4,17 +4,18 @@ import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {CustomValidators} from '/app/shared/customvalidators';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {UsersService} from '/app/users/users.service';
+import {User} from '/app/users/user';
 
 @Component({
     templateUrl: '/app/users/userform.component.html',
     directives: [ROUTER_DIRECTIVES],
-    providers: [UsersService, HTTP_PROVIDERS]
+    providers: [UsersService, HTTP_PROVIDERS, User]
 })
 export class UserForm implements CanDeactivate, OnInit { 
     signupForm: ControlGroup;
     submitted = false;
     routeParams = [];
-    userInfo = [];
+    userInfo = new User();
 
     constructor(
         fb: FormBuilder, 
@@ -25,8 +26,8 @@ export class UserForm implements CanDeactivate, OnInit {
                 name: ['', Validators.required],
                 email: ['', Validators.compose([
                        Validators.required,
-                       CustomValidators.validateEmail,
-                       CustomValidators.isBlank
+                       CustomValidators.validateEmail
+                       //CustomValidators.isBlank
                        ])],
                 phone: [],
                 address: fb.group({
@@ -43,7 +44,6 @@ export class UserForm implements CanDeactivate, OnInit {
     }
 
     submit(){
-    //        console.log(this.signupForm);
         this.submitted = true;
         console.log(this.signupForm.value);
         this._usersService.postUsers(this.signupForm.value)
@@ -60,32 +60,18 @@ export class UserForm implements CanDeactivate, OnInit {
 
     ngOnInit(){
         this.routeParams = this._routeParams.params;
-        this.userInfo = 
-            {
-              "id": 0,
-              "name": "",
-              "username": "",
-              "email": "",
-              "address": {
-                "street": "",
-                "suite": "",
-                "city": "",
-                "zipcode": "",
-                "geo": {
-                  "lat": "",
-                  "lng": ""
-                }
-              },
-              "phone": "",
-              "website": "",
-              "company": {
-                "name": "",
-                "catchPhrase": "",
-                "bs": ""
-              }
-            };
-        // pull in id from API and populate form fields on init
-        this._usersService.getUser(this.routeParams.id).subscribe(x => this.userInfo = x);
+        if (this.routeParams.id == 'new'){
+            console.log("newID");
+            return;
+        }
+        else
+            this._usersService.getUser(this.routeParams.id)
+                .subscribe(
+                    x => {
+                        if (x.status == 404) {
+                            console.log("404 not found!")
+                        }
+                        this.userInfo = x};);
     }
 
 }
