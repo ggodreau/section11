@@ -45,12 +45,16 @@ export class UserForm implements CanDeactivate, OnInit {
 
     submit(){
         this.submitted = true;
-        console.log(this.signupForm.value);
-        this._usersService.postUsers(this.signupForm.value)
-            .subscribe(x => { 
-                console.log("new ID of user is:", JSON.stringify(x));
-                console.log("returned");
-                this._router.navigate(['Users']);});
+        if(this.signupForm.dirty){
+            this._usersService.postUsers(this.signupForm.value)
+                .subscribe(x => { 
+                    console.log("new ID of user is:", JSON.stringify(x));
+                    console.log("returned");
+                    this._router.navigate(['Users']);});
+        }
+        else {
+            return confirm("No changes to form!");
+        }
     }
 
     routerCanDeactivate(next, previous){
@@ -68,9 +72,9 @@ export class UserForm implements CanDeactivate, OnInit {
             this._usersService.getUser(this.routeParams.id)
                 .subscribe(
                     x => {
-                        if (x.status == 404) {
-                            console.log("404 not found!")
-                        }
+                    //                        if (x.status == 404) {
+                    //      console.log("404 not found!")
+                    //  }
                         this.userInfo = x};);
     }
 
