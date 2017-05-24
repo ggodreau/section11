@@ -4,12 +4,12 @@
         </div>
         <div class="col-md-6 col-lg-6"> 
             <h1 *ngIf="[routeParams.id] == 'new'">Add New User</h1>
-            <h1 *ngIf="[routeParams.id] != 'new'">Edit {{ routeParams.name }}</h1>
-            <div>{{ userInfo.address.street }}</div>
+            <h1 *ngIf="[routeParams.id] != 'new'">Edit User</h1>
             <div class="well well-lg">
                 <form [ngFormModel]="signupForm">
                     <fieldset>
                         <legend>User</legend>
+                        
                         <div class="form-group">
                             <label>Name</label>
                             <input 
@@ -24,6 +24,7 @@
                                 Name is required.
                             </div>
                         </div>
+                        
                         <div class="form-group">
                             <label>Email</label>
                             <input 
@@ -43,22 +44,48 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="form-group">
                             <label>Phone</label>
-                            <input ngControl="phone" class="form-control" type="text">
+                            <input 
+                                ngControl="phone" 
+                                class="form-control" 
+                                type="text"
+                                [(ngModel)]="userInfo.phone">
                         </div>
+                    
                     </fieldset>
                     <fieldset>
                         <legend>Address</legend>
                         <div class="form-group" ngControlGroup="address">
+                            
                             <label>Street</label>
-                            <input ngControl="street" class="form-control" type="text">
+                            <input 
+                                ngControl="street" 
+                                class="form-control" 
+                                type="text"
+                                [(ngModel)]="userInfo.address.street">
+                            
                             <label>Suite</label>
-                            <input ngControl="suite" class="form-control" type="text">
+                            <input 
+                                ngControl="suite" 
+                                class="form-control" 
+                                type="text"
+                                [(ngModel)]="userInfo.address.suite">
+                            
                             <label>City</label>
-                            <input ngControl="city" class="form-control" type="text">
+                            <input 
+                                ngControl="city"
+                                class="form-control" 
+                                type="text"
+                                [(ngModel)]="userInfo.address.city">
+                            
                             <label>ZipCode</label>
-                            <input ngControl="zipcode" class="form-control" type="text">
+                            <input 
+                                ngControl="zipcode"
+                                class="form-control"
+                                type="text"
+                                [(ngModel)]="userInfo.address.zipcode">
                         </div>
                     </fieldset>
                     <button 
