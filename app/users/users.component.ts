@@ -62,6 +62,6 @@ export class Users implements OnInit {
     onClick(foo){
         console.log("you have deleted user number: ", foo);
         this._usersService.deleteUser(foo)
-            .subscribe(res => console.log(res));
+            .subscribe(res => console.log("response: ", res));
     }
 }

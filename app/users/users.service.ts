@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UsersService {
     private _url = "http://jsonplaceholder.typicode.com/users";
-    delUserId = {};
+    //    delUserId = {};
 
     constructor(private _http: Http){
     }
@@ -27,9 +27,9 @@ export class UsersService {
     }
 
     deleteUser(userid) {
-        this.delUserId = { id: userid };
-        console.log("delUserId = ", this.delUserId);
-        return this._http.delete(this._url, JSON.stringify(this.delUserId))
+    //        this.delUserId = { id: userid };
+    //    console.log("delUserId = ", this.delUserId);
+        return this._http.delete(this._url + "/" + userid)
             .map(res => res.json());
     }
 
