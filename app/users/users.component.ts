@@ -29,7 +29,13 @@ import {UsersService} from '/app/users/users.service';
                     </td>
                     <!-- also works, but doesn't show hand with hover -->
                     <!-- <td><i class="glyphicon glyphicon-edit" [routerLink]="['UserForm', { id: 'new' }]"></i></td> -->
-                    <td><i class="glyphicon glyphicon-remove"></i></td>
+                    <td>
+                       <i 
+                           (click)="onClick(user.id)" 
+                           class="glyphicon glyphicon-remove">
+                       </i>
+                       {{ user.id }}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -51,5 +57,11 @@ export class Users implements OnInit {
                 this.isLoading = false;
                 this.users = users;
                 });
+    }
+
+    onClick(foo){
+        console.log("you have deleted user number: ", foo);
+        this._usersService.deleteUser(foo)
+            .subscribe(res => console.log(res));
     }
 }
