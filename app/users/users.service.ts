@@ -25,4 +25,9 @@ export class UsersService {
             .map(res => res.json());
     }
 
+    deleteUser(userid) {
+        return this._http.delete(this._url, JSON.stringify(userid))
+            .map(res => res.json());
+    }
+
 }
