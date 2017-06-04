@@ -22,19 +22,19 @@ import {UsersService} from '/app/users/users.service';
                 <tr *ngFor="#user of users">
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
-                    <td>
+                    <td align="center">
                         <a [routerLink]="['UserForm', { id: user.id, name: user.name }]">
                             <i class="glyphicon glyphicon-edit"></i>
                         </a>
                     </td>
                     <!-- also works, but doesn't show hand with hover -->
                     <!-- <td><i class="glyphicon glyphicon-edit" [routerLink]="['UserForm', { id: 'new' }]"></i></td> -->
-                    <td>
+                    <td align="center">
                        <i 
-                           (click)="onClick(user.id)" 
-                           class="glyphicon glyphicon-remove">
+                           (click)="delUser(user.id)" 
+                           class="glyphicon glyphicon-remove"i
+                           role="button">
                        </i>
-                       {{ user.id }}
                     </td>
                 </tr>
             </tbody>
@@ -59,9 +59,8 @@ export class Users implements OnInit {
                 });
     }
 
-    onClick(foo){
-        console.log("you have deleted user number: ", foo);
-        this._usersService.deleteUser(foo)
+    delUser(userId){
+        this._usersService.deleteUser(userId)
             .subscribe(res => console.log("response: ", res));
     }
 }
