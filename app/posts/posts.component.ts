@@ -16,7 +16,14 @@ import {Spinner} from '/app/shared/spinner.component';
                     </ul>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    {{ posts | json }} 
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel title</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
