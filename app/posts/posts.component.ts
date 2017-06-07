@@ -2,6 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {PostsService} from '/app/posts/posts.service';
+import {Spinner} from '/app/shared/spinner.component';
 
 @Component({
     template: `
@@ -9,7 +10,7 @@ import {PostsService} from '/app/posts/posts.service';
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-6">
-                    <i *ngIf="isLoading" class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                    <spinner [isVisible]="isLoading"></spinner>
                     <ul *ngIf="!isLoading" class="list-group">
                         <li *ngFor="#post of posts" class="list-group-item">{{ post.title }}</li>
                     </ul>
@@ -21,7 +22,7 @@ import {PostsService} from '/app/posts/posts.service';
         </div>
         `
         ,
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, Spinner],
     providers: [PostsService, HTTP_PROVIDERS]
 
 })
