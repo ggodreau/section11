@@ -14,4 +14,8 @@ export class PostsService {
         return this._http.get(this._url)
             .map(res => res.json());
     }
+    getComments(id) {
+        return this._http.get(this._url + "/" + id + "/comments")
+            .map(res => res.json());
+    }
 }

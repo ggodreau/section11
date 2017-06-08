@@ -6,7 +6,7 @@ import {Spinner} from '/app/shared/spinner.component';
 
 @Component({
     template: `
-        <h1>PostsComponent</h1>
+        <h1>Posts</h1>
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-6">
@@ -28,6 +28,25 @@ import {Spinner} from '/app/shared/spinner.component';
                         <div class="panel-body">
                             {{ posts[currentPost - 1].body }} 
                         </div>
+
+                        <!-- Comments -->
+
+                        <div
+                            *ngFor="#comment of comments"
+                            class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img 
+                                        class="media-object rcorners1"
+                                        src="http://lorempixel.com/80/80/people?random={{ comment.id }}"
+                                        alt="...">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ comment.name }}</h4>
+                                {{ comment.body }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,6 +63,10 @@ import {Spinner} from '/app/shared/spinner.component';
              border-color:  #ecf0f1;    
              color: #2c3e50;
         }
+        .rcorners1 {
+            border-radius: 100%;
+            padding: 10px;
+        }
     `],
     directives: [ROUTER_DIRECTIVES, Spinner],
     providers: [PostsService, HTTP_PROVIDERS]
@@ -53,6 +76,7 @@ export class Posts implements OnInit {
     isLoading = true;
     posts: array;
     currentPost = false;
+    comments;
 
     constructor(private _postsService: PostsService){}
 
@@ -68,6 +92,10 @@ export class Posts implements OnInit {
         // int when assigned. Needs -1 for json
         // indexing to display correct post/title
         this.currentPost = postId;
+        this._postsService.getComments(postId)
+            .subscribe(res => {
+                console.log("comment = ", res);
+                this.comments = res;});
     }
 
 }
