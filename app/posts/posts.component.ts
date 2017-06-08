@@ -31,6 +31,10 @@ import {Spinner} from '/app/shared/spinner.component';
 
                         <!-- Comments -->
 
+                        <div>
+                            <spinner [isVisible]="commentLoading"></spinner>
+                        </div>
+
                         <div
                             *ngFor="#comment of comments"
                             class="media">
@@ -38,13 +42,13 @@ import {Spinner} from '/app/shared/spinner.component';
                                 <a href="#">
                                     <img 
                                         class="media-object rcorners1"
-                                        src="http://lorempixel.com/80/80/people?random={{ comment.id }}"
+                                        src="http://lorempixel.com/80/80/people?random={{ comment?.id }}"
                                         alt="...">
                                 </a>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">{{ comment.name }}</h4>
-                                {{ comment.body }}
+                                <h4 class="media-heading">{{ comment?.name }}</h4>
+                                {{ comment?.body }}
                             </div>
                         </div>
                     </div>
@@ -74,6 +78,7 @@ import {Spinner} from '/app/shared/spinner.component';
 })
 export class Posts implements OnInit { 
     isLoading = true;
+    commentLoading;
     posts: array;
     currentPost = false;
     comments;
@@ -92,10 +97,12 @@ export class Posts implements OnInit {
         // int when assigned. Needs -1 for json
         // indexing to display correct post/title
         this.currentPost = postId;
+        this.commentLoading = true;
         this._postsService.getComments(postId)
             .subscribe(res => {
-                console.log("comment = ", res);
-                this.comments = res;});
+                console.log("comment = ", res); 
+                this.comments = res;
+                this.commentLoading = false;});
     }
 
 }
