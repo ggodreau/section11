@@ -10,8 +10,8 @@ import {Spinner} from '/app/shared/spinner.component';
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-6">
-                    <spinner [isVisible]="isLoading"></spinner>
-                    <ul *ngIf="!isLoading" class="list-group posts">
+                    <spinner [isVisible]="postLoading"></spinner>
+                    <ul *ngIf="!postLoading" class="list-group posts">
                         <li 
                             *ngFor="#post of posts" 
                             class="list-group-item"
@@ -77,7 +77,7 @@ import {Spinner} from '/app/shared/spinner.component';
 
 })
 export class Posts implements OnInit { 
-    isLoading = true;
+    postLoading = true;
     commentLoading;
     posts: array;
     currentPost = false;
@@ -89,7 +89,7 @@ export class Posts implements OnInit {
         this._postsService.getPosts()
             .subscribe(res => {
                 this.posts = res;
-                this.isLoading = false;});
+                this.postLoading = false;});
     }
 
     onClick(postId){
