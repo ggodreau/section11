@@ -12,16 +12,21 @@ import {Spinner} from '/app/shared/spinner.component';
                 <div class="col-md-6 col-lg-6">
                     <spinner [isVisible]="isLoading"></spinner>
                     <ul *ngIf="!isLoading" class="list-group posts">
-                        <li *ngFor="#post of posts" class="list-group-item">{{ post.title }}</li>
+                        <li 
+                            *ngFor="#post of posts" 
+                            class="list-group-item"
+                            (click)="onClick(post.id)">{{ post.title }}</li>
                     </ul>
                 </div>
                 <div class="col-md-6 col-lg-3">
-                    <div class="panel panel-default">
+                    <div 
+                        *ngIf="currentPost"
+                        class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Panel title</h3>
+                            <h3 class="panel-title">{{ posts[currentPost - 1].title }}</h3>
                         </div>
                         <div class="panel-body">
-                            Panel content
+                            {{ posts[currentPost - 1].body }} 
                         </div>
                     </div>
                 </div>
@@ -47,15 +52,22 @@ import {Spinner} from '/app/shared/spinner.component';
 export class Posts implements OnInit { 
     isLoading = true;
     posts: array;
+    currentPost = false;
 
     constructor(private _postsService: PostsService){}
 
     ngOnInit(){
         this._postsService.getPosts()
             .subscribe(res => {
-                console.log("posts: ", res);
                 this.posts = res;
                 this.isLoading = false;});
+    }
+
+    onClick(postId){
+        // currentPost starts as false, then becomes
+        // int when assigned. Needs -1 for json
+        // indexing to display correct post/title
+        this.currentPost = postId;
     }
 
 }
