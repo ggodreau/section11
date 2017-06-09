@@ -2,6 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {PostsService} from '/app/posts/posts.service';
+import {UsersService} from '/app/users/users.service';
 import {Spinner} from '/app/shared/spinner.component';
 
 @Component({
@@ -13,32 +14,21 @@ import {Spinner} from '/app/shared/spinner.component';
 
                     <!-- Posts -->
 
-                    <div class="dropdown">
-                        <button 
-                            class="btn btn-default dropdown-toggle"
-                            type="button" 
-                            id="dropdownMenu1"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="true">
-                            Dropdown
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </div>
-                
+                    <select #u (change)="dropdown(u.value)" class="form-control">
+                        <option value="">Select a user...</option>
+                        <option 
+                            *ngFor="#user of users" 
+                            value="{{ user.id }}">
+                            {{ user.name }}
+                        </option>
+                    </select>
+
                     <spinner [isVisible]="postLoading"></spinner>
                     <ul *ngIf="!postLoading" class="list-group posts">
                         <li 
                             *ngFor="#post of posts" 
                             class="list-group-item"
-                            (click)="onClick(post.id)">{{ post.title }}</li>
+                            (click)="postClick(post.id)">{{ post.title }}</li>
                     </ul>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -97,7 +87,7 @@ import {Spinner} from '/app/shared/spinner.component';
         .dropdown { position: relative; }
     `],
     directives: [ROUTER_DIRECTIVES, Spinner],
-    providers: [PostsService, HTTP_PROVIDERS]
+    providers: [PostsService, UsersService, HTTP_PROVIDERS]
 
 })
 export class Posts implements OnInit { 
@@ -106,17 +96,23 @@ export class Posts implements OnInit {
     posts: array;
     currentPost = false;
     comments;
+    users;
 
-    constructor(private _postsService: PostsService){}
+    constructor(
+        private _postsService: PostsService,
+        private _usersService: UsersService){}
 
     ngOnInit(){
         this._postsService.getPosts()
             .subscribe(res => {
                 this.posts = res;
                 this.postLoading = false;});
+        this._usersService.getUsers()
+            .subscribe(res => {
+                this.users = res;});
     }
 
-    onClick(postId){
+    postClick(postId){
         // currentPost starts as false, then becomes
         // int when assigned. Needs -1 for json
         // indexing to display correct post/title
@@ -127,6 +123,10 @@ export class Posts implements OnInit {
                 console.log("comment = ", res); 
                 this.comments = res;
                 this.commentLoading = false;});
+    }
+
+    dropdown(userId){
+        console.log(userId);
     }
 
 }
