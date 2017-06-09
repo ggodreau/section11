@@ -35,12 +35,14 @@ import {Spinner} from '/app/shared/spinner.component';
                     <div 
                         *ngIf="currentPost"
                         class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{ posts[currentPost - 1].title }}</h3>
-                        </div>
-                        <div class="panel-body">
-                            {{ posts[currentPost - 1].body }} 
-                        </div>
+                        <div *ngIf="!isDropped">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ posts[currentPost - 1].title }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                {{ posts[currentPost - 1].body }} 
+                            </div>
+                        </div> 
 
                         <!-- Comments -->
 
@@ -97,6 +99,7 @@ export class Posts implements OnInit {
     currentPost = false;
     comments;
     users;
+    isDropped = false;
 
     constructor(
         private _postsService: PostsService,
@@ -117,18 +120,30 @@ export class Posts implements OnInit {
         // int when assigned. Needs -1 for json
         // indexing to display correct post/title
         this.currentPost = postId;
+        console.log("postid = ", postId);
         this.commentLoading = true;
         this._postsService.getComments(postId)
             .subscribe(res => {
-                this.comments = res;
-                this.commentLoading = false;});
+                this.comments = res;});
+        this.commentLoading = false;
     }
 
     dropdown(userId){
-        this.postLoading = true;
-        this._postsService.getPosts(userId)
-            .subscribe(res => this.posts = res);
-        this.postLoading = false;
+        console.log("userId = ", userId);
+        if(userId == "") {
+            this.isDropped = false;
+            console.log("dropped? ", this.isDropped);
+            this.postLoading = true;
+            this._postsService.getPosts(userId)
+                .subscribe(res => this.posts = res);
+            this.postLoading = false;}
+        else {
+            this.isDropped = true;
+            console.log("dropped? ", this.isDropped);
+            this.postLoading = true;
+            this._postsService.getPosts(userId)
+                .subscribe(res => this.posts = res);
+            this.postLoading = false;}
     }
 
 }
