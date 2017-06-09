@@ -120,13 +120,15 @@ export class Posts implements OnInit {
         this.commentLoading = true;
         this._postsService.getComments(postId)
             .subscribe(res => {
-                console.log("comment = ", res); 
                 this.comments = res;
                 this.commentLoading = false;});
     }
 
     dropdown(userId){
-        console.log(userId);
+        this.postLoading = true;
+        this._postsService.getPosts(userId)
+            .subscribe(res => this.posts = res);
+        this.postLoading = false;
     }
 
 }

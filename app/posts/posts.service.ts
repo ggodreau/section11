@@ -13,11 +13,9 @@ export class PostsService {
     // question mark not needed, but included anyway for nulls
     getPosts(userId?) {
         if(userId == null) {
-            console.log("loop1, userid = ", userId);
             return this._http.get(this._url)
                 .map(res => res.json());}
         else {
-            console.log("loop2, userid = ", userId);
             return this._http.get(
                     this._url + "?userId=" + userId)
                 .map(res => res.json());}
