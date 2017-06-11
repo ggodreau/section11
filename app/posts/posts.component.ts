@@ -23,6 +23,29 @@ import {Spinner} from '/app/shared/spinner.component';
                         </option>
                     </select>
 
+                    <!--<pagination [items]="posts"></pagination>-->
+
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <li>
+                          <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                          <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                    
+
                     <spinner [isVisible]="postLoading"></spinner>
                     <ul *ngIf="!postLoading" class="list-group posts">
                         <li 
@@ -31,7 +54,7 @@ import {Spinner} from '/app/shared/spinner.component';
                             (click)="postClick(post.id)">{{ post.title }}</li>
                     </ul>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-6">
                     <div 
                         *ngIf="currentPost"
                         class="panel panel-default">
@@ -49,6 +72,8 @@ import {Spinner} from '/app/shared/spinner.component';
                         <div>
                             <spinner [isVisible]="commentLoading"></spinner>
                         </div>
+
+
 
                         <div
                             *ngFor="#comment of comments"
@@ -120,7 +145,6 @@ export class Posts implements OnInit {
         // int when assigned. Needs -1 for json
         // indexing to display correct post/title
         this.currentPost = postId;
-        console.log("postid = ", postId);
         this.commentLoading = true;
         this._postsService.getComments(postId)
             .subscribe(res => {
@@ -132,14 +156,12 @@ export class Posts implements OnInit {
         console.log("userId = ", userId);
         if(userId == "") {
             this.isDropped = false;
-            console.log("dropped? ", this.isDropped);
             this.postLoading = true;
             this._postsService.getPosts(userId)
                 .subscribe(res => this.posts = res);
             this.postLoading = false;}
         else {
             this.isDropped = true;
-            console.log("dropped? ", this.isDropped);
             this.postLoading = true;
             this._postsService.getPosts(userId)
                 .subscribe(res => this.posts = res);
